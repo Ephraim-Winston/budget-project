@@ -12,3 +12,8 @@ def add_transactions(date, t_type, amount, category):
         "amount": amount,
         "category": category 
     })
+
+def view_transactions():
+    for i, t in enumerate(transactions):
+        print(f"{i+1}. Date: {t['date']},Type: {t['type']},Amount: {t['amount']} Category:{t['category']}")
+    #why comma
