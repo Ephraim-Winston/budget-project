@@ -4,11 +4,7 @@ from datetime import datetime
 #Initialize transactions list
 
 FILENAME = "transactions.csv"
-'''
-date = input("Date of Transaction: ")
-description = float(input("Transaction Description: "))
-amount = input("Transaction Amount: ")
-'''
+
 
 
 class Transaction:
@@ -35,13 +31,14 @@ class Budget:
         new_transaction = Transaction(date, description, amount)
         self.transactions.append(new_transaction)
     
-    def input_transaction_loop(self):
+    def input_transaction_loop(self, filename = FILENAME):
         while True:
             #i remember this function was changed and was "broken up" like we discussed yesterday. I still don't get why.
             date = input("Enter date (YYYY-MM-DD): ")
             description = input("Enter description: ")
             amount = float(input("Enter amount: "))
             self.add_transaction(date, description, amount)
+            self.save_to_csv(filename)
 
             if input("Add another? (y/n): ").lower() != 'y':
                 break
@@ -73,7 +70,7 @@ class Budget:
             for transaction in self.transactions:
                 #loop through transactions in our budgets objects self.transactions = [] attribute and for each transactions write in a row the values of the transactions date, description, and amount 
                 writer.writerow([transaction.date,transaction.description, transaction.amount])
-
+    #FUNCTIONALITY TO ADD: this funcntion needs to check if data exists in csv how to check if csv has data?
     def load_from_csv(self, filename):
         try:
             with open(filename, 'r') as file:
@@ -93,7 +90,10 @@ class Budget:
 
 if __name__ == "__main__":
     my_budget = Budget()
+    my_budget.load_from_csv(FILENAME)
     my_budget.input_transaction_loop()
+    my_budget.display_transactions()
+
 
 '''''
 my_budget = Budget()
