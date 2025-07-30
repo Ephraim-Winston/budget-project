@@ -21,6 +21,36 @@ class Transaction:
 
 
 
+#maybe change name to RemoveTransaction later.
+class RemoveData:
+    def _init_(self, budget, filename):
+        self.budget = budget
+        self.filename = filename
+
+    def remove_by_description(self):
+        description = input("Enter transaction description: ")
+        
+        matches = [t for t in self.budget.transactions if t.description.lower()==description.lower()]
+        #this is a list comprehension 
+        #for every transaction in the budget objects transactions array, if the lowercase description of that transaction matches the lowercase description provided by user input then place the transaction into the matches array.
+        if not matches:
+            print("No matches found.")
+            return
+
+        print("Matches found")
+        for t in matches:
+            print(t.display)
+        #displays the matching transactions in the terminal    
+        #for now display creates a formatted string, i'd like to make it so it displays a drop down of potential matches the user can select from
+#How to turn inputs into buttons?
+        if input("Delete all? (y/n)?: ").lower()== "y":
+            self.budget.transactions = [t for t in self.budget.transactions if t.description.lower()!= description.lower()]
+            self._resave()
+            print("Deleted")
+
+
+
+
 class Budget:
     def __init__(self):
         #initialize with an empty list of transactions
