@@ -46,7 +46,36 @@ class RemoveData:
         if input("Delete all? (y/n)?: ").lower()== "y":
             self.budget.transactions = [t for t in self.budget.transactions if t.description.lower()!= description.lower()]
             self._resave()
+            #_resave() is a developer defined method defined later in the RemoveData object.
+
             print("Deleted")
+
+    def remove_by_datetime(self):
+        date = input("Enter date (YYYY-MM-DD): ")
+        matches = [t for t in self.budget.transactions if t.date == date]
+
+        if not matches:
+            print("No matches found.")
+            return
+        print("Matches founds.")
+        for t in matches:
+            print(t.display)
+    
+        if input("Delete all? (y/n)").lower( )== "y":
+            self.budget. transactions = [t for t in self.budget.transactions if t.date != date]
+            self._resave()
+
+            print("Deleted.")
+        #add matching and confirmation logic here
+        #same structure as above
+
+    def _resave(self):
+        with open(self.filename, 'w', newline = "") as file:
+            writer = csv.writer(file)
+            writer.writerow(['Date', 'Description', 'Amount'])
+            for t in self.budget.transactions:
+                writer.writerow([t.date, t.description, t.amount])
+
 
 
 
